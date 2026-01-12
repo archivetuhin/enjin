@@ -1,5 +1,6 @@
 # Enjin - Portable Multi-PHP & MySQL Development Environment for Windows
-![Project Banner](../assets/banner.png)
+![Project Banner](assets/banner.png)
+
 
 
 ## Overview
