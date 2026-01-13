@@ -3,8 +3,10 @@
 
 <p align="center">
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) 
-[![Platform: Windows](https://img.shields.io/badge/Platform-Windows-blue.svg)]()
-[![PHP Versions](https://img.shields.io/badge/PHP-7.4%7C8.0%7C8.1-lightgrey.svg)]()
+[![Platform: Windows](https://img.shields.io/badge/Platform-Windows-blue.svg)]
+[![PHP Versions](https://img.shields.io/badge/PHP-7.4%7C8.0%7C8.1-lightgrey.svg)]
+[![MySQL](https://img.shields.io/badge/MySQL-5.7%7C8.0-blue.svg)]
+[![Frameworks](https://img.shields.io/badge/Frameworks-Laravel%2CCodeIgniter-green.svg)]
 </p>
 
 ---
@@ -45,6 +47,7 @@ Perfect for testing legacy and modern PHP applications side-by-side on a USB dri
 | ⚙️ Interactive Runner | `run.bat` script guides you through selecting a folder and PHP version. |
 | 💾 Portable Database Support | Pre-configured for portable MySQL/MariaDB without installing services. |
 | 🛠️ Clean Structure | Manual project control. Create folders in `root` and run servers instantly. |
+| 🖥️ Framework Support | Preconfigured to work with Laravel, CodeIgniter, and other PHP frameworks. |
 
 ---
 
