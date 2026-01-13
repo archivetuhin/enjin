@@ -24,7 +24,7 @@ for /f "usebackq tokens=1,* delims==" %%A in ("%~dp0config.ini") do (
     set "!KEY!=!VAL!"
 )
 
-REM Remove trailing slash from SERVER_ROOT if present
+REM Remove trailing slash from SERVER_ROOT and SERVER_DOC_ROOT if present
 if defined SERVER_ROOT set "SERVER_ROOT=%SERVER_ROOT:~0,-1%"
 if defined SERVER_DOC_ROOT set "SERVER_DOC_ROOT=%SERVER_DOC_ROOT:~0,-1%"
 
@@ -58,6 +58,8 @@ echo Target Directory: %TARGET_DIR%
 REM ==== STEP 2: ASK DOMAIN & PORT ====
 if not defined DEFAULT_HOST set DEFAULT_HOST=localhost
 if not defined DEFAULT_PORT set DEFAULT_PORT=8000
+if not defined HOST_IP set HOST_IP=127.0.0.1
+if not defined HOST_PORT set HOST_PORT=80
 
 echo.
 set /p CUSTOM_ASK=Use custom local domain? (yes/no): 
@@ -69,7 +71,7 @@ set "FIRST_CHAR=%FIRST_CHAR:~0,1%"
 if /i "%FIRST_CHAR%"=="y" goto SETUP_CUSTOM
 goto SETUP_DEFAULT
 
-REM Custom Setup
+REM ==== CUSTOM DOMAIN SETUP ====
 :SETUP_CUSTOM
 echo.
 :GETDOMAIN
@@ -78,23 +80,33 @@ if "%HOST_INPUT%"=="" goto GETDOMAIN
 set "HOST=%HOST_INPUT%"
 
 :GETPORT
-set /p PORT_INPUT=Enter Port (default %DEFAULT_PORT%): 
-if "%PORT_INPUT%"=="" set "PORT=%DEFAULT_PORT%" else set "PORT=%PORT_INPUT%"
+set /p PORT_INPUT=Enter Port (default %HOST_PORT%): 
+if "%PORT_INPUT%"=="" (
+    set "PORT=%HOST_PORT%"
+) else (
+    set "PORT=%PORT_INPUT%"
+)
 
-REM UPDATE HOSTS FILE
+REM UPDATE HOSTS FILE AND FLUSH DNS
 echo.
-echo [INFO] Checking hosts file...
-powershell -NoProfile -Command "$wsl = '127.0.0.1'; $domain = '%HOST%'; $file = 'C:\Windows\System32\drivers\etc\hosts'; if (-not (Select-String -Path $file -Pattern $domain -Quiet)) { try { Add-Content -Path $file -Value ('$wsl    $domain'); Write-Host [SUCCESS] Added domain to hosts file. -ForegroundColor Green } catch { Write-Host [WARNING] Run as Administrator to update hosts file automatically. -ForegroundColor Yellow } } else { Write-Host [INFO] Domain already exists in hosts file. }"
+echo [INFO] Checking hosts file and flushing DNS...
+powershell -NoProfile -Command ^
+"$ip = '127.0.0.1'; $domain = '%HOST%'; $file = 'C:\Windows\System32\drivers\etc\hosts'; ^
+if (-not (Select-String -Path $file -Pattern $domain -Quiet)) { ^
+    try { Add-Content -Path $file -Value ('$ip`t$domain'); Write-Host '[SUCCESS] Added domain to hosts file.' -ForegroundColor Green } ^
+    catch { Write-Host '[WARNING] Run as Administrator to update hosts file automatically.' -ForegroundColor Yellow } ^
+} else { Write-Host '[INFO] Domain already exists in hosts file.' }; ^
+Start-Process ipconfig -ArgumentList '/flushdns' -NoNewWindow -Wait; Write-Host '[INFO] DNS cache flushed.' -ForegroundColor Cyan"
 
-set "BIND_IP=127.0.0.1"
+set "BIND_IP=%HOST_IP%"
 goto LIST_PHP
 
-REM Default Setup
+REM ==== DEFAULT SETUP ====
 :SETUP_DEFAULT
 echo Using default configuration...
 set "HOST=%DEFAULT_HOST%"
 set "PORT=%DEFAULT_PORT%"
-set "BIND_IP=%DEFAULT_HOST%"
+set "BIND_IP=%HOST_IP%"
 goto LIST_PHP
 
 REM ==== STEP 3: LIST PHP VERSIONS ====
@@ -123,7 +135,7 @@ set /p PHP_CHOICE=Select PHP number:
 echo !PHP_CHOICE!| findstr /r "^[0-9][0-9]*$" >nul
 if errorlevel 1 goto PHPCHOICE
 if !PHP_CHOICE! GTR %PHP_INDEX% goto PHPCHOICE
-if !PHP_CHOICE% LSS 1 goto PHPCHOICE
+if !PHP_CHOICE! LSS 1 goto PHPCHOICE
 
 set "PHP_EXE=!PHP_PATHS[%PHP_CHOICE%]!"
 
@@ -164,7 +176,6 @@ set "PHPRC=%PHP_DIR%"
 REM ==== STEP 6: CLEAR SCREEN & DRAW COLORED SIGNATURE ====
 echo.
 powershell -NoProfile -Command "Write-Host ' _____  _   _      _ ____   _   _ ' -ForegroundColor Cyan; Write-Host '| ____|| \ | |    | ||_ _| | \ | |' -ForegroundColor Cyan; Write-Host '|  _|  |  \| | _  | | | |  |  \| |' -ForegroundColor Cyan; Write-Host '| |___ | |\  || |_| | | |  | |\  |' -ForegroundColor Cyan; Write-Host '|_____||_| \_| \___/ |___| |_| \_|' -ForegroundColor Cyan"
-
 
 echo.
 echo =================================================
