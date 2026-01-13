@@ -17,14 +17,15 @@
 5. [Quick Start](#quick-start)
 6. [Configuration](#configuration)
 7. [Advanced Configuration](#advanced-configuration)
-8. [Sponsorship](#sponsorship)
+8. [Sponsorship & Donations](#sponsorship--donations)
 9. [Hire Me](#hire-me)
-10. [License](#license)
+10. [Support & Contact](#support--contact)
+11. [License](#license)
 
 ---
 
 ## About
-**Enjin** is a portable, lightweight Windows development environment for PHP developers. It allows you to run multiple **PHP versions** and manage multiple projects easily, with **portable MySQL/MariaDB** support.
+**Enjin** is a portable, lightweight, and versatile Windows development environment for PHP developers. It allows you to run multiple **PHP versions** simultaneously and manage multiple projects with ease. With built-in support for **portable MySQL and MariaDB**, Enjin ensures a clean, isolated workflow without requiring system-wide installation of PHP or databases.
 
 Perfect for testing legacy and modern PHP applications side-by-side on a USB drive or external disk.
 
@@ -39,11 +40,11 @@ Perfect for testing legacy and modern PHP applications side-by-side on a USB dri
 ## Features
 | Feature | Description |
 |---------|-------------|
-| 🚀 Fully Portable | Run from USB or cloud folder. No installation required. |
-| 🔢 Multi-PHP Support | Easily switch between PHP 7.4, 8.0, 8.1, etc. |
-| ⚙️ Interactive Runner | `run.bat` guides you through folder & PHP selection. |
-| 💾 Portable Database | Pre-configured MySQL/MariaDB without installing services. |
-| 🛠️ Clean Structure | Manual project control; simple folder layout. |
+| 🚀 Fully Portable | Run from USB stick or cloud folder. No installation required. |
+| 🔢 Multi-PHP Support | Easily switch between PHP 7.4, 8.0, 8.1, etc., for different projects. |
+| ⚙️ Interactive Runner | `run.bat` script guides you through selecting a folder and PHP version. |
+| 💾 Portable Database Support | Pre-configured for portable MySQL/MariaDB without installing services. |
+| 🛠️ Clean Structure | Manual project control. Create folders in `root` and run servers instantly. |
 
 ---
 
@@ -56,33 +57,46 @@ G:\enjin\
 │  │  ├─ php.exe
 │  │  └─ ext\
 │  ├─ php82\
-│  └─ ...
+│  └─ ... (Add more versions here)
 │
-├─ root\
+├─ root\            (Create your project folders here)
 │  ├─ my_app\
 │  └─ index.php
 │
-├─ database\
+├─ database\        (Portable MySQL/MariaDB folders)
 │  ├─ mysql57\
 │  ├─ mysql80\
 │  └─ ...
 │
-├─ run.bat
-└─ config.ini
+├─ run.bat        (Interactive Server Runner)
+└─ config.ini     (Configuration file)
 ```
 
 ---
 
 ## Quick Start
-1. **Download & Extract:** Extract to `G:\enjin\`.
-2. **Create Project Folder:** In `root`, create your project folder and add PHP files.
-3. **Run Script:** Double-click `run.bat`.
-4. **Interact:** Enter project folder, select PHP version, optionally set host/port.
+### 1. Download & Extract
+Download the latest release and extract it to your desired location (e.g., `G:\enjin\`).
+
+### 2. Create Project Folder
+Navigate to the `root` folder manually and create a new folder for your project (e.g., `my_project`). Add your PHP files (like `index.php`) into this folder.
+
+### 3. Run the Script
+Go back to the main directory (`G:\enjin\`) and double-click **`run.bat`**.
+
+### 4. Interact
+The script will guide you:
+1. **Enter Project Folder Name:** Type the folder you created in `root`.
+2. **Select PHP Version:** Choose from the list of detected versions.
+3. **(Optional) Custom Domain/Port:** Set specific host/port if needed.
+
+The server will start automatically!
 
 ---
 
 ## Configuration
-Edit `config.ini` for global defaults:
+You can edit `config.ini` to set global defaults. This file is read by `run.bat`.
+
 ```ini
 SERVER_ROOT=G:\enjin\
 SERVER_DOC_ROOT=G:\enjin\root\
@@ -93,35 +107,52 @@ DEFAULT_PORT=8000
 ---
 
 ## Advanced Configuration
-### Add New PHP Version
-1. Download Thread Safe ZIP from [php.net](https://windows.php.net/download/).
-2. Extract into `php` folder (e.g., `G:\enjin\php\php83\`).
+### Adding a New PHP Version
+1. Download the **Thread Safe** Zip version for Windows from [php.net](https://windows.php.net/download/).
+2. Extract it into the `php` folder (e.g., `G:\enjin\php\php83\`).
 3. Copy `php.ini-development` to `php.ini` and configure extensions if needed.
-4. Restart `run.bat`.
+4. Restart `run.bat` to see the new version in the list.
 
-### Install Portable MySQL
-1. Download ZIP version of MySQL/MariaDB.
-2. Extract to `database` folder.
-3. Create a `data` folder.
-4. Initialize database:
+### Installing Portable MySQL
+1. Download the **ZIP** (not MSI Installer) portable MySQL/MariaDB.
+2. Extract to the `database` folder (e.g., `G:\enjin\database\mysql81\`).
+3. Create a `data` folder inside the extracted directory.
+4. Run PowerShell as Administrator and initialize the database:
 ```bash
 mysqld --initialize-insecure --datadir="G:\enjin\database\mysql81\data"
 ```
+5. Start the server manually using `mysqld.exe` inside the `bin` folder.
 
 ---
 
-## Sponsorship
-Support Enjin development:
+## Sponsorship & Donations
+If Enjin helps you develop faster or manage your projects more effectively, please consider supporting its development.
+
 [![Donate](https://img.shields.io/badge/Donate-PayPal-gold.svg)](https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=tuhiny2k5@gmail.com&item_name=Enjin+Donation)
+*Donate via PayPal: https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=tuhiny2k5@gmail.com&item_name=Enjin+Donation*
 
 ---
 
 ## Hire Me
-**Stack:** PHP, MySQL, Laravel, CodeIgniter, Vue.js, React.js, AngularJS  
-**Contact:** [GitHub](https://github.com/archivetuhin), [Email](mailto:tuhiny2k5@gmail.com), [WhatsApp](https://wa.me/8801837742506)
+I am the creator of Enjin and available for freelance projects.
+
+**My Tech Stack:**
+- **Backend:** PHP, MySQL, Laravel, CodeIgniter
+- **Frontend:** Vue.js, React.js, AngularJS
+- **Domains:** HRM Systems, CRM Solutions, E-commerce platforms
+
+Feel free to contact me for custom web development or configuration services.
+
+---
+
+## Support & Contact
+- 🐛 **Issues:** [Report a bug or request a feature on GitHub](https://github.com/archivetuhin/enjin-portable-php-mysql-project-maker/issues)
+- 📧 **Email:** [tuhiny2k5@gmail.com](mailto:tuhiny2k5@gmail.com)
+- 💬 **WhatsApp:** [+8801837742506](https://wa.me/8801837742506)
 
 ---
 
 ## License
-MIT License. Free for modification and redistribution.  
-**Created by [archivetuhin](https://github.com/archivetuhin)**
+This project is provided as-is for local development and learning purposes. It is open source under the **MIT License**. You are free to modify and redistribute it within your own projects.
+
+**Created with ❤️ by [archivetuhin](https://github.com/archivetuhin)**
