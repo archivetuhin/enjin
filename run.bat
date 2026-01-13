@@ -82,21 +82,19 @@ set "HOST=%HOST_INPUT%"
 :GETPORT
 set /p PORT_INPUT=Enter Port (default %HOST_PORT%): 
 if "%PORT_INPUT%"=="" (
-    set "PORT=%HOST_PORT%"
-) else (
-    set "PORT=%PORT_INPUT%"
-)
+  set "PORT=%HOST_PORT%"
+  ) 
+else ( set "PORT=%PORT_INPUT%" )
 
-REM UPDATE HOSTS FILE AND FLUSH DNS
+REM UPDATE HOSTS FILE AND FLUSH DNS IF NEW DOMAIN
 echo.
-echo [INFO] Checking hosts file and flushing DNS...
+echo [INFO] Checking hosts file...
 powershell -NoProfile -Command ^
-"$ip = '127.0.0.1'; $domain = '%HOST%'; $file = 'C:\Windows\System32\drivers\etc\hosts'; ^
+"$ip = '%HOST_IP%'; $domain = '%HOST%'; $file = 'C:\Windows\System32\drivers\etc\hosts'; ^
 if (-not (Select-String -Path $file -Pattern $domain -Quiet)) { ^
-    try { Add-Content -Path $file -Value ('$ip`t$domain'); Write-Host '[SUCCESS] Added domain to hosts file.' -ForegroundColor Green } ^
+    try { Add-Content -Path $file -Value ('$ip`t$domain'); Write-Host '[SUCCESS] Added domain to hosts file.' -ForegroundColor Green; Start-Process ipconfig -ArgumentList '/flushdns' -NoNewWindow -Wait; Write-Host '[INFO] DNS cache flushed.' -ForegroundColor Cyan } ^
     catch { Write-Host '[WARNING] Run as Administrator to update hosts file automatically.' -ForegroundColor Yellow } ^
-} else { Write-Host '[INFO] Domain already exists in hosts file.' }; ^
-Start-Process ipconfig -ArgumentList '/flushdns' -NoNewWindow -Wait; Write-Host '[INFO] DNS cache flushed.' -ForegroundColor Cyan"
+} else { Write-Host '[INFO] Domain already exists in hosts file.' }"
 
 set "BIND_IP=%HOST_IP%"
 goto LIST_PHP
@@ -159,13 +157,11 @@ if not exist "%PHP_INI%" (
 REM 2. AUTO-FIX: Fix extension_dir AND Disable Oracle Extensions
 if exist "%PHP_INI%" (
     echo [INFO] Optimizing php.ini...
-    
     powershell -NoProfile -Command ^
     "$content = Get-Content '%PHP_INI%'; " ^
     "$content = $content -replace '^;?\s*extension_dir\s*=\s*\".*\"', 'extension_dir = \"ext\"'; " ^
     "$content = $content -replace '^;?\s*extension\s*=\s*(pdo_oci|oci8|pdo_oci8)', ';extension=$1'; " ^
     "Set-Content '%PHP_INI%' $content"
-    
     echo [INFO] - Configuration optimized.
 )
 
@@ -197,6 +193,8 @@ if /i "%FIRST_CHAR%"=="y" (
 )
 
 REM Start Server
+echo "%PHP_EXE%" -S %BIND_IP%:%PORT% -t "%TARGET_DIR%"
+
 "%PHP_EXE%" -S %BIND_IP%:%PORT% -t "%TARGET_DIR%"
 
 pause
