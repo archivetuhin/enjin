@@ -14,6 +14,7 @@ set "CONFIG_FILE=%BASE%\lib\scripts\config.bat"
 
 call "%CONFIG_FILE%" "%BASE%"
 
+echo INSTTT %INST_DIR%
 
 
 REM 4. Call create-project.bat

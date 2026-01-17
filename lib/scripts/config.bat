@@ -25,7 +25,7 @@ REM ==================================================
 REM --- SERVER PATH ---
 set "SERVER_ROOT=!BASE!\root\"
 set "SERVER_DOC_ROOT=!BASE!\root\"
-
+set "INST_DIR=!BASE!\instance\"
 REM --- PHP PATH ---
 set "PHP_PATH=!BASE!\lib\php\"
 
@@ -71,7 +71,8 @@ endlocal & (
     set "BASE=%BASE%"
     set "SERVER_ROOT=%BASE%\root\"
     set "SERVER_DOC_ROOT=%BASE%\root\"
-
+    set "INST_DIR=%BASE%\instance\"
+    
     set "PHP_PATH=%BASE%\lib\php\"
     set "PHP_INSTALL=%BASE%\lib\scripts\php.bat"
 

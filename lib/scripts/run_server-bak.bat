@@ -23,25 +23,24 @@ if "%USE_SSL%" == "Y" (
 echo =================================================
 echo  Press Ctrl+C to stop.
 echo.
-echo status %USE_SSL% cgi %PHP_CGI%
+echo status %USE_SSL%
 
 REM ---- Normalize paths ----
 set "NG_EXE=%NGINX_EXE:\=/%"
 set "NG_CONF=%NGINX_CONF:\=/%"
 set "NG_DIR=%NGINX_DIR:\=/%"
-    echo [INFO] Starting PHP FastCGI on %BIND_IP%:%PORT%  
+
 if /i "%USE_SSL%"=="Y" (
 
-
+    echo [INFO] Starting PHP FastCGI on %BIND_IP%:%PORT%
 
     REM ---- Kill any existing nginx ----
     taskkill /IM nginx.exe /F >nul 2>&1
 
     REM ---- Start php-cgi ----
-       start "PHP-CGI" cmd /k "%PHP_DIR%php-cgi.exe -b %BIND_IP%:%PORT%"
+    start "PHP-CGI" cmd /k "%PHP_DIR%php-cgi.exe -b %BIND_IP%:%PORT%"
 
     REM ---- Wait until php-cgi is listening ----
-    echo %BIND_IP%:%PORT%
     :WAIT_PHP
     netstat -an | findstr "%BIND_IP%:%PORT%" | find "LISTENING" >nul
     if errorlevel 1 (

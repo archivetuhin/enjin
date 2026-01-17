@@ -18,6 +18,7 @@ for /d %%D in ("%PHP_PATH%*") do (
     if exist "%%D\php.exe" (
         set /a PHP_INDEX+=1
         set "PHP_PATHS[!PHP_INDEX!]=%%D\php.exe"
+         set "PHP_PATHS[!PHP_INDEX!]=%%D\php-cgi.exe"
         set "PHP_NAMES[!PHP_INDEX!]=%%~nxD"
         echo !PHP_INDEX!. %%~nxD
     )
@@ -78,6 +79,7 @@ if not exist "!PHP_EXE!" (
 )
 
 set "PHP_INI=!PHP_DIR!php.ini"
+set "PHP_CGI=!PHP_DIR!php-cgi.exe"
 
 REM ==================================================
 REM 6. Ensure php.ini exists
@@ -124,6 +126,7 @@ REM 9. Return variables to run.bat
 REM ==================================================
 endlocal & (
     set "PHP_EXE=%PHP_EXE%"
+    set "PHP_CGI=%PHP_CGI%"
     set "PHP_DIR=%PHP_DIR%"
     set "PHP_INI=%PHP_INI%"
     set "PHPRC=%PHPRC%"

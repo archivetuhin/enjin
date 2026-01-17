@@ -1,0 +1,10 @@
+{
+    "name": "enjin/test",
+    "authors": [
+        {
+            "name": "Tuhin",
+            "email": "archivetuhin@gmail.com"
+        }
+    ],
+    "require": {}
+}
