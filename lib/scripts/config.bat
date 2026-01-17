@@ -50,18 +50,20 @@ set "OPENSSL_EXE_86=!BASE!\lib\tools\openssl\x86\bin\openssl.exe"
 set "OPENSSL_CONF=!BASE!\lib\tools\openssl\ssl\openssl.cnf"
 
 REM --- SSL ---
-set "SSL_INSTALL=!BASE!\lib\scripts\ssl.bat"
+
 set "SSL_KEY=!BASE!\lib\tools\openssl\ssl\certs\server.key"
 set "SSL_CERT=!BASE!\lib\tools\openssl\ssl\certs\server.crt"
 set "SSL_PEM=!BASE!\lib\tools\openssl\ssl\certs\server.pem"
 
 REM --- SCRIPTS ---
+
 set "CREATE_PROJECT=!BASE!\lib\scripts\create-project.bat"
 set "SET_DOMAIN=!BASE!\lib\scripts\domain.bat"
 set "SET_PHP=!BASE!\lib\scripts\set_php.bat"
 set "SET_COMPOSER=!BASE!\lib\scripts\composer.bat"
 set "SET_NGINX=!BASE!\lib\scripts\nginx.bat"
 set "GET_SERVER=!BASE!\lib\scripts\run_server.bat"
+set "SSL_INSTALL=!BASE!\lib\scripts\ssl.bat"
 REM ==================================================
 REM 3. EXPORT VARIABLES TO PARENT SCRIPT
 REM We must use 'endlocal' to allow variables to survive,

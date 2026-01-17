@@ -70,13 +70,13 @@ if /i "%USE_SSL%"=="Y" (
     ) else (
         echo [INFO] SSL certificate/key already exist.
     )
-)
+
 
 REM ==============================
 REM Step 3: Create log folder + files
 REM ==============================
 if not exist "%NGINX_DIR%\logs" mkdir "%NGINX_DIR%\logs"
-
+if not exist "%NGINX_DIR%\temp" mkdir "%NGINX_DIR%\temp"
 if not exist "%NGINX_DIR%\logs\error.log" (
     type nul > "%NGINX_DIR%\logs\error.log"
 )
@@ -141,6 +141,6 @@ echo [INFO] Rewriting nginx.conf content...
 
 echo [INFO] nginx.conf content overwritten: %NGINX_CONF_FILE%
 endlocal & set "USE_SSL=%USE_SSL%"
-
+)
 echo [INFO] Nginx setup completed.
 exit /b 0

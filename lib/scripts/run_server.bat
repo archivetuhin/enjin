@@ -11,9 +11,9 @@ echo =================================================
 echo  Folder: %TARGET_DIR%
 echo  PHP:    !PHP_NAMES[%PHP_CHOICE%]!
 if "%USE_SSL%" == "Y" (
-	echo  URL:    httpS://%HOST%
+    echo  URL:    httpS://%HOST%
 ) else (
-	IF "%PORT%" == 80 (
+    IF "%PORT%" == 80 (
     echo  URL:    http://%HOST%
     ) else (
         echo  URL:    http://%HOST%:%PORT%
